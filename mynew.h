@@ -1,5 +1,5 @@
 #ifndef MYNEW_H
-  #define MYNEW_H
+#define MYNEW_H
 //#define _USE_OLD_RW_STL
 //#include <cstdlib>
 #include <stdexcept>
