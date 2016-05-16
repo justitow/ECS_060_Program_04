@@ -5,6 +5,8 @@
 
 class MemMan
 {
+
+
   public:
   MemMan(int ram, int proc, int op, MemCheck &memCheck);
   ~MemMan();
@@ -13,5 +15,14 @@ class MemMan
   int alloc(int proc, int opNum, int size, MemCheck &memCheck, char print);
   void deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck, char print );
 }; // class MemMan
+
+
+
+
+class Process
+{
+
+
+};
 
 #endif
