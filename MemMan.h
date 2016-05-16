@@ -4,9 +4,17 @@
 #include "MemCheck.h"
 #include "QuadraticProbing.h"
 
+class Process
+{
+private:
+  QuadraticHashTable<int> table;
+public:
+
+};
+
 class MemMan
 {
-
+  Process* processes = new Process[100];
 
   public:
   MemMan(int ram, int proc, int op, MemCheck &memCheck);
@@ -20,9 +28,6 @@ class MemMan
 
 
 
-class Process
-{
 
-};
 
 #endif
