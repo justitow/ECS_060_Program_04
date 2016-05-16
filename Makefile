@@ -13,6 +13,5 @@ MemRunner.o : MemRunner.cpp CPUTimer.h MemMan.h mynew.h
 mynew.o : mynew.cpp mynew.h 
 	g++ -ansi -Wall -g -c mynew.cpp
 
-
 clean : 
 	rm -f MemRunner.out  MemMan.o  MemRunner.o  mynew.o   

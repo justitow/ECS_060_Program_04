@@ -2,6 +2,7 @@
 #define MemManH
 #include "mynew.h"
 #include "MemCheck.h"
+#include "QuadraticProbing.h"
 
 class MemMan
 {
@@ -21,7 +22,6 @@ class MemMan
 
 class Process
 {
-
 
 };
 
