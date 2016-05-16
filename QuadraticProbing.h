@@ -3,6 +3,7 @@
 
         #include "vector.h"
         #include "mystring.h"
+        #include "mynew.h"
 
         // QuadraticProbing Hash table class
         //

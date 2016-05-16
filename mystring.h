@@ -2,6 +2,8 @@
 #define _MY_STRING_H_
 
 #include <iostream>
+#include "mynew.h"
+
 using namespace std;
 
 /*

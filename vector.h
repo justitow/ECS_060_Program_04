@@ -8,6 +8,7 @@
  */
 #define vector Vector
 #include <cstddef>
+#include "mynew.h"
 
 class ArrayIndexOutOfBounds { };
 
