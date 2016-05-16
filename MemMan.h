@@ -9,7 +9,8 @@ class Process
 private:
   QuadraticHashTable<int> table;
 public:
-
+  Process();
+  ~Process();
 };
 
 class MemMan
