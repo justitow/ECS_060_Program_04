@@ -11,11 +11,12 @@ private:
 public:
   Process();
   ~Process();
+
 };
 
 class MemMan
 {
-  Process* processes = new Process[100];
+  Process* processes = new Process[100]();
 
   public:
   MemMan(int ram, int proc, int op, MemCheck &memCheck);

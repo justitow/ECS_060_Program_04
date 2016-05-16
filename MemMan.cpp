@@ -7,12 +7,12 @@
 using namespace std;
 
 
-MemMan::MemMan(int ram, int proc, int op, MemCheck &memCheck) 
+Process::Process() : table(101)
 {
+
 }// MemMan()
 
-
-MemMan::~MemMan()
+Process::~Process()
 {
   
 } // ~MemMan()
