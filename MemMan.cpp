@@ -10,9 +10,20 @@ using namespace std;
 Process::Process() : table(101)
 {
 
-}// MemMan()
+}
 
 Process::~Process()
+{
+
+}
+
+
+MemMan::MemMan(int ram, int proc, int op, MemCheck &memCheck)
+{
+}// MemMan()
+
+
+MemMan::~MemMan()
 {
   
 } // ~MemMan()
