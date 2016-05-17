@@ -67,7 +67,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   this->processes[proc].table->insert(*this->prevAdr);
   *prevAdr += size; // just to do the niave approach, maybe, I think
 
-  return address;
+  return *this->prevAdr;
 } // alloc()
 
 
