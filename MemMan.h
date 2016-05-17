@@ -7,6 +7,8 @@
 class MemBlock
 {
 public:
+  MemBlock();
+  ~MemBlock();
   int address;
   int block_size;
   int proc;

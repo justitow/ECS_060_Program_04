@@ -7,6 +7,17 @@
 using namespace std;
 
 
+MemBlock::MemBlock()
+{
+
+}
+
+MemBlock::~MemBlock()
+{
+
+}
+
+
 Process::Process()
 {
   table = new QuadraticHashTable<int>(101);

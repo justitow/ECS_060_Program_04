@@ -182,6 +182,14 @@
             return hashVal;
         }
 
+        <HashedObj>
+        int QuadraticHashTable<HashedObj>::hash( const MemBlock& key, int tableSize ) const
+        {
+          int ret_key;
+          if( key.address < 0 ) ret_key = -key.address;
+          return ret_key % tableSize;
+        }
+
 
         /**
          * A hash routine for ints.
@@ -193,11 +201,3 @@
             return key % tableSize;
         }
 
-
-        <HashedObj>
-        int QuadraticHashTable<HashedObj>::hash( const MemBlock& key, int tableSize ) const
-        {
-          int ret_key;
-          if( key.address < 0 ) ret_key = -key.address;
-          return ret_key % tableSize;
-        }
