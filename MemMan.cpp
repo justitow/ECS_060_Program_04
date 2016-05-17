@@ -21,6 +21,7 @@ Process::~Process()
 
 MemMan::MemMan(int ram, int proc, int op, MemCheck &memCheck)
 {
+  processes = new Process[100]();
 }// MemMan()
 
 

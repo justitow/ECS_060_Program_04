@@ -16,7 +16,7 @@ public:
 
 class MemMan
 {
-  Process* processes = new Process[100]();
+  Process* processes;
 
   public:
   MemMan(int ram, int proc, int op, MemCheck &memCheck);
