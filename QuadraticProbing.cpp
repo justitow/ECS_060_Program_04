@@ -1,5 +1,7 @@
         #include "QuadraticProbing.h"
 
+#include "MemMan.h"
+
         /**
          * Internal method to test if a positive number is prime.
          * Not an efficient algorithm.
