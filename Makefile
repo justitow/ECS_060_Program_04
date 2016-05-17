@@ -4,7 +4,7 @@ MemRunner.out : MemCheck.o MemMan.o MemRunner.o mynew.o
 # MemCheck.o : MemCheck.cpp MemCheck.h 
 #	g++ -ansi -Wall -c MemCheck.cpp
 
-MemMan.o : MemMan.cpp MemMan.h mynew.h MemCheck.h QuadraticProbing.h
+MemMan.o : MemMan.cpp MemMan.h mynew.h MemCheck.h 
 	g++ -ansi -Wall -g -c MemMan.cpp
 
 MemRunner.o : MemRunner.cpp CPUTimer.h MemMan.h mynew.h 
