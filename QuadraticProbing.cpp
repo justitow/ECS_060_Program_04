@@ -182,13 +182,7 @@
 
             return hashVal;
         }
-        template <class HashedObj>
-         int QuadraticHashTable<HashedObj>::hash( MemBlock & key, int tableSize ) const
-        {
-          int ret_key;
-          if( key.address < 0 ) ret_key = -key.address;
-          return ret_key % tableSize;
-        }
+
 
 
         /**
@@ -201,3 +195,10 @@
             return key % tableSize;
         }
 
+        template <class HashedObj>
+        int QuadraticHashTable<HashedObj>::hash( HashedObj & key, int tableSize ) const
+        {
+          int ret_key;
+          if( key.address < 0 ) ret_key = -key.address;
+          return ret_key % tableSize;
+        }

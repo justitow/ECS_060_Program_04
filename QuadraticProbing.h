@@ -56,9 +56,10 @@
             bool isActive( int currentPos ) const;
             int findPos( const HashedObj & x ) const;
             int hash( const string & key, int tableSize ) const;
-            int hash( const MemBlock& key, int tableSize) const;
             int hash( int key, int tableSize ) const;
-            void rehash( );
+            int hash( const HashedObj& key, int tableSize) const;
+
+          void rehash( );
         };
 
         #include "QuadraticProbing.cpp"
