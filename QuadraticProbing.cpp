@@ -196,7 +196,7 @@
         }
 
         template <class HashedObj>
-        int QuadraticHashTable<HashedObj>::hash( HashedObj & key, int tableSize ) const
+        int QuadraticHashTable<HashedObj>::hash( const HashedObj & key, int tableSize ) const
         {
           int ret_key;
           if( key.address < 0 ) ret_key = -key.address;
