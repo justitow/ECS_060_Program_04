@@ -58,7 +58,7 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
 int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
 {
   int address = 0;  // to avoid warnings 
-  
+  cout << "Allocating!" << endl;
   if(print != '0')
     cout << "Opnum: " << opNum << " alloc: proc: " << proc << " address: " 
       << address << " size: " << size << endl;
@@ -68,6 +68,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   // allocates a block of the specified size, and returns its address.
   this->processes[proc].table->insert(*this->prevAdr);
   *prevAdr += size; // just to do the niave approach, maybe, I think
+  
   return address;
 } // alloc()
 
