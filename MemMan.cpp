@@ -10,6 +10,7 @@ using namespace std;
 Process::Process()
 {
   table = new QuadraticHashTable<int>(101);
+
   proc = new int;
 }
 
@@ -59,14 +60,18 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   int address = 0;  // to avoid warnings 
   //if(print != '0')
     cout << "Opnum: " << opNum << " alloc: proc: " << proc << " address: " 
-      << address << " size: " << size << endl;
+      << *this->prevAdr << " size: " << size << endl;
   
    //memCheck.printOwner(address, endAddress);
   memCheck.printCurrentAllocations(proc);
   // allocates a block of the specified size, and returns its address.
-  this->processes[proc].table->insert(*this->prevAdr);
-  *prevAdr += size; // just to do the niave approach, maybe, I think
 
+  for (int i = 0; i < size; i++)
+  {
+    this->processes[proc].table->insert(*this->prevAdr + i);
+  }
+
+  *prevAdr += size; // just to do the niave approach, maybe, I think
   return *this->prevAdr;
 } // alloc()
 
@@ -79,6 +84,9 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
   //  memCheck.printCurrentAllocations(proc);
   // memCheck.printOwner(startAddress, endAddress);
   this->processes[proc].table->remove(startAddress);
+
+
+  //for
  
 } // deAlloc()
 

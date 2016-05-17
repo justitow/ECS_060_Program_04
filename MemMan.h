@@ -4,12 +4,22 @@
 #include "MemCheck.h"
 #include "QuadraticProbing.h"
 
+class MemBlock
+{
+public:
+  int address;
+  int block_size;
+  int proc;
+};
+
 class Process
 {
 public:
+
+
   int* proc;
   QuadraticHashTable<int>* table;
-  friend MemMan;
+  QuadraticHashTable<MemBlock>* sizeTable;
   Process();
   ~Process();
 };
