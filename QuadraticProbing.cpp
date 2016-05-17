@@ -182,9 +182,9 @@
 
             return hashVal;
         }
-
+        typename
         <HashedObj>
-        int QuadraticHashTable<HashedObj>::hash( MemBlock & key, int tableSize ) const
+         int QuadraticHashTable<HashedObj>::hash( MemBlock & key, int tableSize ) const
         {
           int ret_key;
           if( key.address < 0 ) ret_key = -key.address;
