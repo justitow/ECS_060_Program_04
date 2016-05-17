@@ -9,7 +9,6 @@ using namespace std;
 
 Process::Process()
 {
-  cout << "Creating proccesses" << endl;
   table = new QuadraticHashTable<int>(101);
   proc = new int;
 }
@@ -39,7 +38,7 @@ MemMan::~MemMan()
 bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck, 
   char print)
 {
-  if(print != '0')
+  //if(print != '0')
     cout << "Opnum: " << opNum << " access: proc: " << proc << " address: " << address << endl;
   
   // memCheck.printCurrentAllocations(proc);
@@ -75,7 +74,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
 void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
   char print)
 {
-  if (print != '0')
+  //if (print != '0')
     cout << "Opnum: " << opNum << " daAlloc: proc: " << proc << " startAddress: " << startAddress << endl;
   //  memCheck.printCurrentAllocations(proc);
   // memCheck.printOwner(startAddress, endAddress);
@@ -86,7 +85,7 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
 
 void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
 {
-  if(print != '0')
+  //if(print != '0')
     cout << "Opnum: " << opNum << " endProc: proc: " << proc << endl;
   
    // memCheck.printCurrentAllocations(proc);
