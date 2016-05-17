@@ -61,8 +61,8 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
     cout << "Opnum: " << opNum << " alloc: proc: " << proc << " address: " 
       << address << " size: " << size << endl;
   
-  // memCheck.printOwner(address, endAddress);
-  // memCheck.printCurrentAllocations(proc);
+   //memCheck.printOwner(address, endAddress);
+  memCheck.printCurrentAllocations(proc);
   // allocates a block of the specified size, and returns its address.
   this->processes[proc].table->insert(*this->prevAdr);
   *prevAdr += size; // just to do the niave approach, maybe, I think
