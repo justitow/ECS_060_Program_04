@@ -17,6 +17,7 @@ public:
 class MemMan
 {
   Process* processes;
+  int* prevAdr;
 
   public:
   MemMan(int ram, int proc, int op, MemCheck &memCheck);
