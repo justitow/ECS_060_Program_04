@@ -182,8 +182,7 @@
 
             return hashVal;
         }
-        typename
-        <HashedObj>
+        template <class HashedObj>
          int QuadraticHashTable<HashedObj>::hash( MemBlock & key, int tableSize ) const
         {
           int ret_key;
