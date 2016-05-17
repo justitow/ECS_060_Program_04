@@ -4,7 +4,6 @@
         #include "vector.h"
         #include "mystring.h"
         #include "mynew.h"
-        #include "MemMan.h"
 
 
         // QuadraticProbing Hash table class
@@ -57,7 +56,6 @@
             int findPos( const HashedObj & x ) const;
             int hash( const string & key, int tableSize ) const;
             int hash( const MemBlock& key, int tableSize) const;
-
             int hash( int key, int tableSize ) const;
             void rehash( );
         };
