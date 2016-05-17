@@ -5,7 +5,6 @@
         #include "mystring.h"
         #include "mynew.h"
 
-#include "MemMan.h"
 
 
         // QuadraticProbing Hash table class
