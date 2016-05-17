@@ -1,7 +1,6 @@
 #ifndef MemCheckH
 #define MemCheckH
 #include <set>
-
 using namespace std;
 
 class BlockInfo7

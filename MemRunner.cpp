@@ -43,7 +43,7 @@ Operation* readFile(const char* filename, int *RAM, int *procs, int *ops)
   return operations;
 } // readFile()
 
-bool exifault(Operation &operation, MemMan *memMan, int opNum, MemCheck &memCheck,
+bool fault(Operation &operation, MemMan *memMan, int opNum, MemCheck &memCheck,
   char print)
 {
   int badAddress = memCheck.getBadAddress(operation.proc);
