@@ -9,7 +9,7 @@ using namespace std;
 
 Process::Process()
 {
-  cout << "Creating proccesses" << end;
+  cout << "Creating proccesses" << endl;
   table = new QuadraticHashTable<int>(101);
   proc = new int;
 }
