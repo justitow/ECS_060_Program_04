@@ -7,7 +7,7 @@
 using namespace std;
 
 
-Process::Process() :
+Process::Process()
 {
   table = new QuadraticHashTable<int>(101);
   proc = new int;
