@@ -7,9 +7,10 @@
 using namespace std;
 
 
-Process::Process() : table(101)
+Process::Process() :
 {
-
+  table = new QuadraticHashTable(101);
+  proc = new int;
 }
 
 Process::~Process()
@@ -38,9 +39,12 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
   
   // memCheck.printCurrentAllocations(proc);
  // memCheck.printOwner(address, address);
-  
-   
-  return true;
+  if (this->processes[proc].table->find(address)) // if the address is in the address table stored under the process. Maybe?
+  {
+    return true;
+  }
+  else
+    this->endProc(proc, opNum, memCheck, print);
   // If seg fault, then free all memory assigned to the process, and return false.
   // If legitimate access, then return true;
 }  // access()

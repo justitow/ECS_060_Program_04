@@ -6,12 +6,12 @@
 
 class Process
 {
-private:
-  QuadraticHashTable<int> table;
 public:
+  int* proc;
+  QuadraticHashTable<int>* table;
+  friend MemMan;
   Process();
   ~Process();
-
 };
 
 class MemMan
