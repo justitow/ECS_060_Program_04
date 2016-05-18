@@ -7,11 +7,25 @@
 class MemBlock
 {
 public:
-  MemBlock();
+  MemBlock(int address, int block_size);
   ~MemBlock();
   int address;
   int block_size;
-  int proc;
+  MemBlock* next;
+  MemBlock* prev;
+};
+
+class MemSpace
+{
+public:
+  MemSpace();
+  ~MemSpace();
+  MemBlock* head;
+  MemBlock* curr;
+  int find_block(int adr);
+  void insert(int adr, int size);
+  void remove(int adr);
+
 };
 
 class Process
@@ -21,6 +35,7 @@ public:
 
   int* proc;
   QuadraticHashTable<int>* table;
+  MemSpace* space;
   Process();
   ~Process();
 };
