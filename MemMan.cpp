@@ -31,7 +31,12 @@ MemSpace::~MemSpace()
 
 int MemSpace::find_block(int adr)
 {
-  for (curr = head; curr->next != NULL && adr < curr->address; curr = curr->next);
+  curr = head;
+  while (curr->address != adr)
+  {
+    curr = curr->next;
+  }
+
 
   return curr->block_size;
 }
