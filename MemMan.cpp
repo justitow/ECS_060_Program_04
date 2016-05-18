@@ -153,7 +153,7 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
   
   memCheck.printCurrentAllocations(proc);
   memCheck.printOwner(address, address);
-  if (this->processes[proc].table->find(address)) // if the address is in the address table stored under the process. Maybe?
+  if (this->processes[proc].table->find(address) != -1) // if the address is in the address table stored under the process. Maybe?
   {
     return true;
   }
