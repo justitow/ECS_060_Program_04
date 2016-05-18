@@ -37,7 +37,7 @@ int MemSpace::find_block(int adr)
     curr = curr->next;
   }
 
-
+  cout << "found it" << endl;
   return curr->block_size;
 }
 
