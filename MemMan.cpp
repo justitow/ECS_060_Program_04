@@ -82,7 +82,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
     this->processes[proc].table->insert(*this->prevAdr + i);
   }
 
-  *prevAdr += size; // just to do the niave approach, maybe, I think
+  *prevAdr += size + 1; // just to do the niave approach, maybe, I think
   return *this->prevAdr;
 } // alloc()
 
@@ -95,10 +95,15 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
   //  memCheck.printCurrentAllocations(proc);
   // memCheck.printOwner(startAddress, endAddress);
   this->processes[proc].table->remove(startAddress);
+  int i = 0;
+  while(this->processes[proc].table->find(startAddress + i))
+  {
+    this->processes[proc].table->remove(startAddress + i);
+    i++;
+  }
 
 
-  //for
- 
+
 } // deAlloc()
 
 

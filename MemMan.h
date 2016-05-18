@@ -21,7 +21,6 @@ public:
 
   int* proc;
   QuadraticHashTable<int>* table;
-  QuadraticHashTable<MemBlock>* sizeTable;
   Process();
   ~Process();
 };
