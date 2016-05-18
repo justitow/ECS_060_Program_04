@@ -49,6 +49,7 @@ void MemSpace::insert(int adr, int size)
 
     if (curr == head)
     {
+      cout << "head insert" << endl;
       if (adr < curr->address)
       {
         myblock->next = head;
@@ -64,6 +65,7 @@ void MemSpace::insert(int adr, int size)
 
     else if (curr->next == NULL)
     {
+      cout << "tail insert" << endl;
       if (adr < curr->address)
       {
         curr->prev->next = myblock;
@@ -80,6 +82,7 @@ void MemSpace::insert(int adr, int size)
 
     else
     {
+      cout << "mid insert" << endl;
       curr->prev->next = myblock;
       myblock->prev = curr->prev;
       myblock->next = curr;
