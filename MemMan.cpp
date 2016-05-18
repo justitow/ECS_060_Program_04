@@ -121,6 +121,7 @@ void MemSpace::remove(int adr)
 
 void MemSpace::print()
 {
+  /*
   curr = head;
   if (curr == NULL)
     return;
@@ -131,6 +132,7 @@ void MemSpace::print()
     curr = curr->next;
   }
   cout << curr->address << endl;
+   */
 }
 
 Process::Process()
