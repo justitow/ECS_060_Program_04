@@ -213,8 +213,17 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   
    // memCheck.printCurrentAllocations(proc);
   // free all memory assigned to proc.
-  delete this->processes[proc].table;
-  this->processes[proc].table = new QuadraticHashTable<int>(100);
+  while (this->processes[proc].space->head->next != NULL)
+  {
+    memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
+    this->processes[proc].space->head = this->processes[proc].space->head->next;
+    if (this->processes[proc].space->head->prev != NULL)
+      delete this->processes[proc].space->head->prev;
+  }
+  memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
+  delete this->processes[proc].space->head;
+  
+  this->processes[proc].table->makeEmpty();
 } // endProc()
 
 
