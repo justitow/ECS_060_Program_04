@@ -39,12 +39,10 @@ int MemSpace::find_block(int adr)
 void MemSpace::insert(int adr, int size)
 {
 
-  cout << "Adding: " << adr << endl;
   MemBlock* myblock = new MemBlock(adr, size);
   if (this->head == NULL)
   {
     head = myblock;
-    return;
   }
   else
   {
@@ -91,7 +89,6 @@ void MemSpace::insert(int adr, int size)
 
   }
 
-  cout << "Added: " << adr << endl;
 
 }
 
@@ -203,7 +200,6 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   }
 
   this->processes[proc].space->insert(*this->prevAdr, size);
-  cout << "Threw it: " << *this->prevAdr << endl;
   *prevAdr += size; // just to do the niave approach, maybe, I think
 
   memCheck.printCurrentAllocations(proc);
@@ -227,8 +223,6 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
     this->processes[proc].table->remove(startAddress + i);
   }
 
-  memCheck.printCurrentAllocations(proc);
-  memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress));
 
 
 } // deAlloc()
