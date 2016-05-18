@@ -254,13 +254,12 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   // free all memory assigned to proc.
   this->processes[proc].space->print();
 
- 
+
   while (this->processes[proc].space->head != NULL)
   {
     memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
     this->deAlloc(proc, opNum, this->processes[proc].space->head->address, memCheck, print);
-    this->processes[proc].space->head = this->processes[proc].space->head->next;
-    delete this->processes[proc].space->head->prev;
+
   }
 
   this->processes[proc].space->head = NULL;
