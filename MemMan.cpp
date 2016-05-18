@@ -167,11 +167,11 @@ MemMan::~MemMan()
 bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck, 
   char print)
 {
-  //if(print != '0')
+  if(print != '0')
     cout << "Opnum: " << opNum << " access: proc: " << proc << " address: " << address << endl;
   
-  memCheck.printCurrentAllocations(proc);
-  memCheck.printOwner(address, address);
+  //memCheck.printCurrentAllocations(proc);
+  //memCheck.printOwner(address, address);
 
   if (this->processes[proc].table->find(address) != -1) // if the address is in the address table stored under the process. Maybe?
   {
@@ -190,7 +190,7 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
 int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
 {
   int address = 0;  // to avoid warnings 
-  //if(print != '0')
+  if(print != '0')
     cout << "Opnum: " << opNum << " alloc: proc: " << proc << " address: " 
       << *this->prevAdr << " size: " << size << endl;
   
@@ -205,8 +205,8 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   this->processes[proc].space->insert(*this->prevAdr, size);
   *prevAdr += size; // just to do the niave approach, maybe, I think
 
-  memCheck.printCurrentAllocations(proc);
-  this->processes[proc].space->print();
+  //memCheck.printCurrentAllocations(proc);
+  //this->processes[proc].space->print();
 
   return *this->prevAdr - size;
 } // alloc()
@@ -215,10 +215,10 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
 void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
   char print)
 {
-  //if (print != '0')
+  if (print != '0')
     cout << "Opnum: " << opNum << " daAlloc: proc: " << proc << " startAddress: " << startAddress << endl;
-    memCheck.printCurrentAllocations(proc);
-    memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress) - 1);
+    //memCheck.printCurrentAllocations(proc);
+    //memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress) - 1);
   int ref = this->processes[proc].space->find_block(startAddress);
 
   for (int i = 0; i < ref; i++)
@@ -233,12 +233,12 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
 
 void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
 {
-  //if(print != '0')
+  if(print != '0')
     cout << "Opnum: " << opNum << " endProc: proc: " << proc << endl;
   
-  memCheck.printCurrentAllocations(proc);
+  //memCheck.printCurrentAllocations(proc);
   // free all memory assigned to proc.
-  this->processes[proc].space->print();
+  //this->processes[proc].space->print();
 
   while (this->processes[proc].space->head->next != NULL)
   {
@@ -254,7 +254,7 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
 
   this->processes[proc].table->makeEmpty();
 
-  memCheck.printCurrentAllocations(proc);
+  //memCheck.printCurrentAllocations(proc);
 } // endProc()
 
 
