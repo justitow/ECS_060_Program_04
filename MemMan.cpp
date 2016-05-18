@@ -96,7 +96,7 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
   // memCheck.printOwner(startAddress, endAddress);
   this->processes[proc].table->remove(startAddress);
   int i = 0;
-  while(this->processes[proc].table->find(startAddress + i))
+  while(this->processes[proc].table->find(startAddress + i) != -1)
   {
     //cout << startAddress + i;
     this->processes[proc].table->remove(startAddress + i);
