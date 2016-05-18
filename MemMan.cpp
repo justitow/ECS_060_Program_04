@@ -177,7 +177,6 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
       << *this->prevAdr << " size: " << size << endl;
   
    //memCheck.printOwner(address, endAddress);
-  memCheck.printCurrentAllocations(proc);
   // allocates a block of the specified size, and returns its address.
 
   for (int i = 0; i < size; i++)
@@ -188,6 +187,8 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   this->processes[proc].space->insert(*this->prevAdr, size);
 
   *prevAdr += size; // just to do the niave approach, maybe, I think
+
+  memCheck.printCurrentAllocations(proc);
   return *this->prevAdr - size;
 } // alloc()
 
@@ -206,6 +207,8 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
     this->processes[proc].table->remove(startAddress + i);
   }
 
+  memCheck.printCurrentAllocations(proc);
+  memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress));
 
 
 } // deAlloc()
@@ -229,6 +232,8 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   delete this->processes[proc].space->head;
 
   this->processes[proc].table->makeEmpty();
+
+  memCheck.printCurrentAllocations(proc);
 } // endProc()
 
 
