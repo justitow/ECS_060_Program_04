@@ -121,7 +121,7 @@ void MemSpace::remove(int adr)
 
 void MemSpace::print()
 {
-  /*
+
   curr = head;
   if (curr == NULL)
     return;
@@ -132,7 +132,7 @@ void MemSpace::print()
     curr = curr->next;
   }
   cout << curr->address << endl;
-   */
+
 }
 
 Process::Process()
@@ -250,6 +250,7 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   }
   memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
   delete this->processes[proc].space->head;
+  this->processes[proc].space->head = NULL;
 
   this->processes[proc].table->makeEmpty();
 
