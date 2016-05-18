@@ -199,7 +199,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   }
 
   this->processes[proc].space->insert(*this->prevAdr, size);
-  cout << "Added: " << this->prevAdr << endl;
+  cout << "Threw it: " << *this->prevAdr << endl;
   *prevAdr += size; // just to do the niave approach, maybe, I think
 
   memCheck.printCurrentAllocations(proc);
