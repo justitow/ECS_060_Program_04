@@ -254,23 +254,18 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   // free all memory assigned to proc.
   this->processes[proc].space->print();
 
-  if (this->processes[proc].space->head != NULL)
+ 
+  while (this->processes[proc].space->head != NULL)
   {
-    while (this->processes[proc].space->head->next != NULL) {
-      //cout << "Ending: " << this->processes[proc].space->head->address << endl;
-      memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
-      this->deAlloc(proc, opNum, this->processes[proc].space->head->address, memCheck, print);
-      this->processes[proc].space->head = this->processes[proc].space->head->next;
-      delete this->processes[proc].space->head->prev;
-    }
-    this->deAlloc(proc, opNum, this->processes[proc].space->head->address, memCheck, print);
     memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
-    delete this->processes[proc].space->head;
-    this->processes[proc].space->head = NULL;
-
-    this->processes[proc].table->makeEmpty();
+    this->deAlloc(proc, opNum, this->processes[proc].space->head->address, memCheck, print);
+    this->processes[proc].space->head = this->processes[proc].space->head->next;
+    delete this->processes[proc].space->head->prev;
   }
 
+  this->processes[proc].space->head = NULL;
+
+  this->processes[proc].table->makeEmpty();
 
 
   //memCheck.printCurrentAllocations(proc);
