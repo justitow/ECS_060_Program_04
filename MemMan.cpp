@@ -46,7 +46,7 @@ void MemSpace::insert(int adr, int size)
   }
   else
   {
-    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next)
+    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
 
     if (curr == head)
     {
@@ -215,7 +215,7 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
   //if (print != '0')
     cout << "Opnum: " << opNum << " daAlloc: proc: " << proc << " startAddress: " << startAddress << endl;
     memCheck.printCurrentAllocations(proc);
-    memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress));
+    memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress) - 1);
   int ref = this->processes[proc].space->find_block(startAddress);
 
   for (int i = 0; i < ref; i++)
