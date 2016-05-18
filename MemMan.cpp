@@ -245,9 +245,9 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   if(print != '0')
     cout << "Opnum: " << opNum << " endProc: proc: " << proc << endl;
   
-  memCheck.printCurrentAllocations(proc);
+  //memCheck.printCurrentAllocations(proc);
   // free all memory assigned to proc.
-  this->processes[proc].space->print();
+  //this->processes[proc].space->print();
 
   if (this->processes[proc].space->head != NULL)
   {
