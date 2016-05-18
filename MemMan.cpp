@@ -37,7 +37,6 @@ int MemSpace::find_block(int adr)
     curr = curr->next;
   }
 
-  cout << "found it" << endl;
   return curr->block_size;
 }
 
@@ -250,9 +249,9 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   if(print != '0')
     cout << "Opnum: " << opNum << " endProc: proc: " << proc << endl;
   
-  memCheck.printCurrentAllocations(proc);
+  //memCheck.printCurrentAllocations(proc);
   // free all memory assigned to proc.
-  this->processes[proc].space->print();
+  //this->processes[proc].space->print();
 
 
   while (this->processes[proc].space->head != NULL)
