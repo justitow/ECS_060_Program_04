@@ -45,7 +45,8 @@ void MemSpace::insert(int adr, int size)
   }
   else
   {
-    for (curr = head; curr->next != NULL && curr->next->address < adr; curr = curr->next);
+    for (curr = head; curr->next != NULL && curr->next->address < adr; curr = curr)
+      curr = curr->next;
 
     if (curr == head)
     {
