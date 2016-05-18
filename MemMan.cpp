@@ -123,10 +123,9 @@ void MemSpace::print()
   curr = head;
   while (curr->next != NULL)
   {
-    curr = curr->next;
     cout << curr->address << endl;
+    curr = curr->next;
   }
-  curr = curr->next;
   cout << curr->address << endl;
 }
 
