@@ -31,7 +31,7 @@ MemSpace::~MemSpace()
 
 int MemSpace::find_block(int adr)
 {
-  for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
+  for (curr = head; curr->next != NULL && adr < curr->address; curr = curr->next);
 
   return curr->block_size;
 }
@@ -46,7 +46,7 @@ void MemSpace::insert(int adr, int size)
   }
   else
   {
-    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next)
+    for (curr = head; curr->next != NULL && adr < curr->address; curr = curr->next)
       prev = curr;
 
     if (curr == head)
@@ -95,7 +95,7 @@ void MemSpace::insert(int adr, int size)
 
 void MemSpace::remove(int adr)
 {
-  for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
+  for (curr = head; curr->next != NULL && adr < curr->address; curr = curr->next);
 
   if (curr == head)
   {
