@@ -95,12 +95,21 @@ void MemSpace::insert(int adr, int size)
 
 void MemSpace::remove(int adr)
 {
-  for (curr = head; curr->next != NULL && adr != curr->address; curr = curr->next);
+  curr = head;
+  while(adr != curr->address)
+  {
+    curr = curr->next;
+  }
 
   if (curr == head)
   {
-    curr->next->prev = NULL;
-    head = curr->next;
+    if (curr->next != NULL)
+    {
+      head->next->prev = NULL;
+      head = head->next;
+    }
+    else
+      head = NULL;
     delete curr;
   }
 
