@@ -153,12 +153,16 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
   
   memCheck.printCurrentAllocations(proc);
   memCheck.printOwner(address, address);
+
   if (this->processes[proc].table->find(address) != -1) // if the address is in the address table stored under the process. Maybe?
   {
+    cout << "It is rightfully accessed!" << endl;
     return true;
   }
   else
     this->endProc(proc, opNum, memCheck, print);
+
+  cout << "THIEF!" << endl;
   return false;
   // If seg fault, then free all memory assigned to the process, and return false.
   // If legitimate access, then return true;
@@ -172,7 +176,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
       << *this->prevAdr << " size: " << size << endl;
   
    //memCheck.printOwner(address, endAddress);
-  //memCheck.printCurrentAllocations(proc);
+  memCheck.printCurrentAllocations(proc);
   // allocates a block of the specified size, and returns its address.
 
   for (int i = 0; i < size; i++)
@@ -192,8 +196,8 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
 {
   //if (print != '0')
     cout << "Opnum: " << opNum << " daAlloc: proc: " << proc << " startAddress: " << startAddress << endl;
-  //  memCheck.printCurrentAllocations(proc);
-  // memCheck.printOwner(startAddress, endAddress);
+    memCheck.printCurrentAllocations(proc);
+    memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress));
   int ref = this->processes[proc].space->find_block(startAddress);
 
   for (int i = 0; i < ref; i++)
@@ -211,7 +215,7 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   //if(print != '0')
     cout << "Opnum: " << opNum << " endProc: proc: " << proc << endl;
   
-   // memCheck.printCurrentAllocations(proc);
+  memCheck.printCurrentAllocations(proc);
   // free all memory assigned to proc.
   while (this->processes[proc].space->head->next != NULL)
   {
@@ -222,7 +226,7 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   }
   memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
   delete this->processes[proc].space->head;
-  
+
   this->processes[proc].table->makeEmpty();
 } // endProc()
 
