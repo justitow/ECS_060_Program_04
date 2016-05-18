@@ -123,6 +123,9 @@ void MemSpace::remove(int adr)
 void MemSpace::print()
 {
   curr = head;
+  if (curr == NULL)
+    return;
+
   while (curr->next != NULL)
   {
     cout << curr->address << endl;
