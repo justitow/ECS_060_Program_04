@@ -175,13 +175,13 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
 
   if (this->processes[proc].table->find(address) != -1) // if the address is in the address table stored under the process. Maybe?
   {
-    cout << "It is rightfully accessed!" << endl;
+    //cout << "It is rightfully accessed!" << endl;
     return true;
   }
   else
     this->endProc(proc, opNum, memCheck, print);
 
-  cout << "THIEF!" << endl;
+  //cout << "THIEF!" << endl;
   return false;
   // If seg fault, then free all memory assigned to the process, and return false.
   // If legitimate access, then return true;
@@ -242,7 +242,7 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
 
   while (this->processes[proc].space->head->next != NULL)
   {
-    cout << "Ending: " << this->processes[proc].space->head->address << endl;
+    //cout << "Ending: " << this->processes[proc].space->head->address << endl;
     memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
     this->processes[proc].space->head = this->processes[proc].space->head->next;
     if (this->processes[proc].space->head->prev != NULL)
