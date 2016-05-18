@@ -22,11 +22,10 @@ public:
   ~MemSpace();
   MemBlock* head;
   MemBlock* curr;
-  MemBlock* prev;
   int find_block(int adr);
   void insert(int adr, int size);
   void remove(int adr);
-
+  void print();
 };
 
 class Process

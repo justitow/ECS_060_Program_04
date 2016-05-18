@@ -45,7 +45,7 @@ void MemSpace::insert(int adr, int size)
   }
   else
   {
-    for (curr = head; curr->next != NULL && curr->address < adr; prev = curr, curr = curr->next)
+    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next)
 
     if (curr == head)
     {
@@ -116,6 +116,18 @@ void MemSpace::remove(int adr)
     delete curr;
   }
 
+}
+
+void MemSpace::print()
+{
+  curr = head;
+  while (curr->next != NULL)
+  {
+    curr = curr->next;
+    cout << curr->address << endl;
+  }
+  curr = curr->next;
+  cout << curr->address << endl;
 }
 
 Process::Process()
@@ -222,6 +234,8 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   
   memCheck.printCurrentAllocations(proc);
   // free all memory assigned to proc.
+  this->processes[proc].space->print();
+
   while (this->processes[proc].space->head->next != NULL)
   {
     cout << "Ending: " << this->processes[proc].space->head->address << endl;
