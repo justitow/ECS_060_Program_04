@@ -98,7 +98,7 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
   int i = 0;
   while(this->processes[proc].table->find(startAddress + i))
   {
-    cout << startAddress + i
+    //cout << startAddress + i;
     this->processes[proc].table->remove(startAddress + i);
     i++;
   }
