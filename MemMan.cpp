@@ -194,13 +194,11 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
     cout << "Opnum: " << opNum << " daAlloc: proc: " << proc << " startAddress: " << startAddress << endl;
   //  memCheck.printCurrentAllocations(proc);
   // memCheck.printOwner(startAddress, endAddress);
-  this->processes[proc].table->remove(startAddress);
-  int i = 0;
-  while(this->processes[proc].table->find(startAddress + i) != -1)
+  int ref = this->processes[proc].space->find_block(startAddress);
+
+  for (int i = 0; i < ref; i++)
   {
-    //cout << startAddress + i;
     this->processes[proc].table->remove(startAddress + i);
-    i++;
   }
 
 
