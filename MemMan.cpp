@@ -251,14 +251,15 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
 
   if (this->processes[proc].space->head != NULL)
   {
-    while (this->processes[proc].space->head->next != NULL) {
+    while (this->processes[proc].space->head->next != NULL)
+    {
       //cout << "Ending: " << this->processes[proc].space->head->address << endl;
+      this->deAlloc(proc, opNum, this->processes[proc].space->head->address, memCheck, print);
       memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
       this->processes[proc].space->head = this->processes[proc].space->head->next;
-      if (this->processes[proc].space->head->prev != NULL)
-        delete this->processes[proc].space->head->prev;
+      delete this->processes[proc].space->head->prev;
     }
-
+    this->deAlloc(proc, opNum, this->processes[proc].space->head->address, memCheck, print);
     memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
     delete this->processes[proc].space->head;
     this->processes[proc].space->head = NULL;
