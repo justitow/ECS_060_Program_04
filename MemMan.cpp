@@ -43,6 +43,7 @@ void MemSpace::insert(int adr, int size)
   if (this->head == NULL)
   {
     head = myblock;
+    cout << "new with head at address : " << adr << endl;
     return;
   }
   else
