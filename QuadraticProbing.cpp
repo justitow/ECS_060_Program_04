@@ -1,5 +1,8 @@
         #include "QuadraticProbing.h"
 
+#include "MemMan.h"
+
+        MemBlock mem;
 
         /**
          * Internal method to test if a positive number is prime.
