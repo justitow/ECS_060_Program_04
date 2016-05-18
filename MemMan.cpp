@@ -258,12 +258,14 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
     if (this->processes[proc].space->head->prev != NULL)
       delete this->processes[proc].space->head->prev;
   }
-  memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
-  delete this->processes[proc].space->head;
-  this->processes[proc].space->head = NULL;
+  if (this->processes[proc].space->head != NULL)
+  {
+    memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
+    delete this->processes[proc].space->head;
+    this->processes[proc].space->head = NULL;
 
-  this->processes[proc].table->makeEmpty();
-
+    this->processes[proc].table->makeEmpty();
+  }
   //memCheck.printCurrentAllocations(proc);
 } // endProc()
 
