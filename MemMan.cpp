@@ -88,6 +88,8 @@ void MemSpace::insert(int adr, int size)
 
   }
 
+  cout << "Added: " << adr << endl;
+
 }
 
 void MemSpace::remove(int adr)
@@ -160,7 +162,6 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
     return true;
   }
   else
-    cout << "THIEF!" << endl;
     this->endProc(proc, opNum, memCheck, print);
 
   cout << "THIEF!" << endl;
@@ -185,7 +186,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   }
 
   this->processes[proc].space->insert(*this->prevAdr, size);
-
+  cout << "Added: " << *this->prevAdr << endl;
   *prevAdr += size; // just to do the niave approach, maybe, I think
 
   memCheck.printCurrentAllocations(proc);
