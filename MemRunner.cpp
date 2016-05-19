@@ -104,7 +104,7 @@ bool access(Operation &operation, MemMan *memMan, int opNum,
 int main(int argc, char* argv[])
 {
   int RAM, procs, ops;
-  char print = '1'; // argv[2][0];
+  char print = '0'; // argv[2][0];
   Operation *operations = readFile(argv[1], &RAM, &procs, &ops);
   MemCheck memCheck(RAM, procs, ops);
   CPUTimer ct;
@@ -141,7 +141,6 @@ int main(int argc, char* argv[])
   int yourRAM = memCheck.checkOperations(operations); 
   cout << "CPU Time: " << CPUTime << " Ideal RAM: " << RAM
     << " Your RAM: " << yourRAM << " Real RAM: " << maxRAM2 << endl;
-  cout << *memMan->prevAdr << endl;
   delete memMan;  // useful for determining final size of ADTs.
   return 0;
 } // main()

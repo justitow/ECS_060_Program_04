@@ -1,6 +1,6 @@
 #define _USE_OLD_RW_STL
 
-#include <cstdlib>
+#include <cstdlib> //needed for malloc
 #include <iostream>
 #include "mynew.h"
 // #define SHOW_SIZE
