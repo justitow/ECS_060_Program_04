@@ -22,6 +22,7 @@ MemSpace::MemSpace()
 {
   head = NULL;
   curr = head;
+  last = head;
 }
 
 MemSpace::~MemSpace()
@@ -47,51 +48,12 @@ void MemSpace::insert(int adr, int size)
   if (this->head == NULL)
   {
     head = myblock;
+    last = head;
   }
-  else
+  else // for niave approach, this will always be where the thing is getting inserted, I think
   {
-    for (curr = head; curr->next != NULL && adr > curr->address; curr = curr->next)
-      prev = curr;
-
-    if (curr == head)
-    {
-      if (adr < curr->address)
-      {
-        myblock->next = head;
-        head->prev = myblock;
-        head = myblock;
-      }
-      else
-      {
-        head->next = myblock;
-        myblock->prev = head;
-      }
-    }
-
-    else if (curr->next == NULL)
-    {
-      if (adr < curr->address)
-      {
-        curr->prev->next = myblock;
-        myblock->prev = curr->prev;
-        myblock->next = curr;
-        curr->prev = myblock;
-      }
-      else
-      {
-        curr->next = myblock;
-        myblock->prev = curr;
-      }
-    }
-
-    else
-    {
-      curr->prev->next = myblock;
-      myblock->prev = curr->prev;
-      myblock->next = curr;
-      curr->prev = myblock;
-    }
-
+    last->next = myblock;
+    myblock->prev = last;
   }
 
 
@@ -105,7 +67,7 @@ void MemSpace::remove(int adr)
     curr = curr->next;
   }
 
-  if (curr == head)
+  if (curr == head) // head delete
   {
     if (curr->next != NULL)
     {
@@ -117,13 +79,13 @@ void MemSpace::remove(int adr)
     delete curr;
   }
 
-  else if (curr->next == NULL)
+  else if (curr->next == NULL) // tail delete
   {
     curr->prev->next = NULL;
     delete curr;
   }
 
-  else
+  else // body delete
   {
     curr->prev->next = curr->next;
     curr->next->prev = curr->prev;
@@ -148,23 +110,28 @@ void MemSpace::print()
 
 }
 
-Process::Process()
+bool MemSpace::check_for_adr(int adr)
 {
-  table = new QuadraticHashTable<int>(-1);
-  space = new MemSpace();
-  proc = new int;
+  for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
+
+  if (curr->prev != NULL)
+    curr = curr->prev;
+
+
+  if (adr > curr->address && adr <= curr->address + curr->block_size - 1)
+    return true;
+  return false;
 }
 
-Process::~Process()
+void MemSpace::make_empty()
 {
-  delete table;
-  delete proc;
+
 }
 
 
 MemMan::MemMan(int ram, int proc, int op, MemCheck &memCheck)
 {
-  processes = new Process[100]();
+  memSpaces = new MemSpace[100];
   prevAdr = new int;
   *prevAdr = 0;
 }// MemMan()
@@ -172,7 +139,8 @@ MemMan::MemMan(int ram, int proc, int op, MemCheck &memCheck)
 
 MemMan::~MemMan()
 {
-  delete [] processes;
+  delete [] memSpaces;
+
 } // ~MemMan()
 
 
@@ -186,15 +154,13 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
   //memCheck.printCurrentAllocations(proc);
   //memCheck.printOwner(address, address);
 
-  if (this->processes[proc].table->find(address) != -1) // if the address is in the address table stored under the process. Maybe?
+  if (this->memSpaces[proc].check_for_adr(address)) // if the address is in the address table stored under the process. Maybe?
   {
-    //cout << "It is rightfully accessed!" << endl;
     return true;
   }
   else
     this->endProc(proc, opNum, memCheck, print);
 
-  //cout << "THIEF!" << endl;
   return false;
   // If seg fault, then free all memory assigned to the process, and return false.
   // If legitimate access, then return true;
@@ -202,7 +168,6 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
 
 int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
 {
-  int address = 0;  // to avoid warnings 
   if(print != '0')
     cout << "Opnum: " << opNum << " alloc: proc: " << proc << " address: " 
       << *this->prevAdr << " size: " << size << endl;
@@ -210,12 +175,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
    //memCheck.printOwner(address, endAddress);
   // allocates a block of the specified size, and returns its address.
 
-  for (int i = 0; i < size; i++)
-  {
-    this->processes[proc].table->insert(*this->prevAdr + i);
-  }
-
-  this->processes[proc].space->insert(*this->prevAdr, size);
+  this->memSpaces[proc].insert(*this->prevAdr, size);
   *prevAdr += size; // just to do the niave approach, maybe, I think
 
   //memCheck.printCurrentAllocations(proc);
@@ -232,14 +192,9 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
     cout << "Opnum: " << opNum << " daAlloc: proc: " << proc << " startAddress: " << startAddress << endl;
     //memCheck.printCurrentAllocations(proc);
     //memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress) - 1);
-  int ref = this->processes[proc].space->find_block(startAddress);
 
-  for (int i = 0; i < ref; i++)
-  {
-    this->processes[proc].table->remove(startAddress + i);
-  }
-  this->processes[proc].space->remove(startAddress);
 
+  this->memSpaces[proc].remove(startAddress);
 
 } // deAlloc()
 
@@ -254,16 +209,15 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   //this->processes[proc].space->print();
 
 
-  while (this->processes[proc].space->head != NULL)
+  while (this->memSpaces[proc].head != NULL)
   {
-    memCheck.deAlloc(proc, this->processes[proc].space->head->address, opNum);
-    this->deAlloc(proc, opNum, this->processes[proc].space->head->address, memCheck, print);
-
+    memCheck.deAlloc(proc, this->memSpaces[proc].head->address, opNum);
+    this->memSpaces[proc].remove(this->memSpaces[proc].head->address);
   }
 
-  this->processes[proc].space->head = NULL;
+  //this->processes[proc].space->head = NULL;
 
-  this->processes[proc].table->makeEmpty();
+  //this->processes[proc].table->makeEmpty();
 
 
   //memCheck.printCurrentAllocations(proc);

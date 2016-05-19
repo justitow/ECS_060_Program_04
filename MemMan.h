@@ -2,7 +2,6 @@
 #define MemManH
 #include "mynew.h"
 #include "MemCheck.h"
-#include "QuadraticProbing.h"
 
 class MemBlock
 {
@@ -22,29 +21,19 @@ public:
   ~MemSpace();
   MemBlock* head;
   MemBlock* curr;
-  MemBlock* prev;
+  MemBlock* last;
   int find_block(int adr);
+  bool check_for_adr(int adr);
   void insert(int adr, int size);
   void remove(int adr);
+  void make_empty();
   void print();
 };
 
-class Process
-{
-public:
-
-
-  int* proc;
-  QuadraticHashTable<int>* table;
-  MemSpace* space;
-  Process();
-  ~Process();
-};
 
 class MemMan
 {
-  Process* processes;
-
+  MemSpace* memSpaces;
   public:
   MemMan(int ram, int proc, int op, MemCheck &memCheck);
   ~MemMan();
