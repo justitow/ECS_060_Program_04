@@ -44,7 +44,6 @@ public:
 class MemMan
 {
   Process* processes;
-  int* prevAdr;
 
   public:
   MemMan(int ram, int proc, int op, MemCheck &memCheck);
@@ -53,6 +52,9 @@ class MemMan
   void endProc(int proc, int opNum, MemCheck &memCheck, char print);
   int alloc(int proc, int opNum, int size, MemCheck &memCheck, char print);
   void deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck, char print );
+
+  int* prevAdr;
+
 }; // class MemMan
 
 
