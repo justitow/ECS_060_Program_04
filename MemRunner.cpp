@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
   int yourRAM = memCheck.checkOperations(operations); 
   cout << "CPU Time: " << CPUTime << " Ideal RAM: " << RAM
     << " Your RAM: " << yourRAM << " Real RAM: " << maxRAM2 << endl;
-  cout << memMan->prevAdr << endl;
+  cout << *memMan->prevAdr << endl;
   delete memMan;  // useful for determining final size of ADTs.
   return 0;
 } // main()
