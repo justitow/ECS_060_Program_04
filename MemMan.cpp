@@ -112,13 +112,13 @@ void MemSpace::print()
 
 bool MemSpace::check_for_adr(int adr)
 {
-  for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
+  for (curr = head; curr->next != NULL && curr->address <= adr; curr = curr->next);
 
-  if (curr->prev != NULL && curr->next != NULL)
+  if (curr != head && curr != last)
     curr = curr->prev;
 
 
-  if (adr >= curr->address && adr <= curr->address + curr->block_size - 1)
+  if (adr <= curr->address + curr->block_size - 1)
     return true;
   return false;
 }
