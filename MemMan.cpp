@@ -54,6 +54,7 @@ void MemSpace::insert(int adr, int size)
   {
     last->next = myblock;
     myblock->prev = last;
+    last = myblock;
   }
 
 
