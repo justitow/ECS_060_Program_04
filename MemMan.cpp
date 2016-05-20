@@ -155,7 +155,7 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
   if(print != '0')
     cout << "Opnum: " << opNum << " access: proc: " << proc << " address: " << address << endl;
   
-  //memCheck.printCurrentAllocations(proc);
+  memCheck.printCurrentAllocations(proc);
   //memCheck.printOwner(address, address);
 
   if (this->memSpaces[proc].check_for_adr(address)) // if the address is in the address table stored under the process. Maybe?
