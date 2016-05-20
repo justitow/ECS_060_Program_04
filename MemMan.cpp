@@ -115,20 +115,20 @@ bool MemSpace::check_for_adr(int adr)
 {
   if (head != NULL)
   {
-  for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
+    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
 
-  if (curr != head)
-  {
-    if (curr != last || (curr == last && adr < curr->address))
+    if (curr != head)
     {
-      curr = curr->prev;
-      cout << "went back" << endl;
+      if (curr != last || (curr == last && adr < curr->address))
+      {
+        curr = curr->prev;
+      }
     }
+
+    if (adr <= curr->address + curr->block_size - 1)
+      return true;
   }
 
-  if (adr <= curr->address + curr->block_size - 1)
-    return true;
-  }
   return false;
 }
 
