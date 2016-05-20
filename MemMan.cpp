@@ -114,7 +114,7 @@ bool MemSpace::check_for_adr(int adr)
 {
   for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
 
-  if (curr->prev != NULL)
+  if (curr->prev != NULL && curr->next != NULL)
     curr = curr->prev;
 
 
