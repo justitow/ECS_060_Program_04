@@ -207,7 +207,7 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   
   //memCheck.printCurrentAllocations(proc);
   // free all memory assigned to proc.
-  //this->processes[proc].space->print();
+  this->memSpaces[proc].print();
 
 
   while (this->memSpaces[proc].head != NULL)
