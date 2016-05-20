@@ -118,7 +118,7 @@ bool MemSpace::check_for_adr(int adr)
     curr = curr->prev;
 
 
-  if (adr > curr->address && adr <= curr->address + curr->block_size - 1)
+  if (adr >= curr->address && adr <= curr->address + curr->block_size - 1)
     return true;
   return false;
 }
@@ -179,7 +179,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
 
   *prevAdr += size; // just to do the niave approach, maybe, I think
 
-  memCheck.printCurrentAllocations(proc);
+  //memCheck.printCurrentAllocations(proc);
   //this->processes[proc].space->print();
   cout << "Allocated: " << *this->prevAdr - size << endl;
   return *this->prevAdr - size;
