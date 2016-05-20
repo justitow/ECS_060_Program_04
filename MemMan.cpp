@@ -216,6 +216,8 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
     this->memSpaces[proc].remove(this->memSpaces[proc].head->address);
   }
 
+  this->memSpaces[proc].print();
+
   //this->processes[proc].space->head = NULL;
 
   //this->processes[proc].table->makeEmpty();
