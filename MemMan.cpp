@@ -212,11 +212,11 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
 
   while (this->memSpaces[proc].head != NULL)
   {
+    cout << "DeAlloc-ing: " << this->memSpaces[proc].head->address << endl;
     memCheck.deAlloc(proc, this->memSpaces[proc].head->address, opNum);
     this->memSpaces[proc].remove(this->memSpaces[proc].head->address);
   }
 
-  this->memSpaces[proc].print();
 
   //this->processes[proc].space->head = NULL;
 
