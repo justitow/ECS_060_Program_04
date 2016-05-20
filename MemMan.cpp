@@ -176,11 +176,12 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   // allocates a block of the specified size, and returns its address.
 
   this->memSpaces[proc].insert(*this->prevAdr, size);
+
   *prevAdr += size; // just to do the niave approach, maybe, I think
 
   //memCheck.printCurrentAllocations(proc);
   //this->processes[proc].space->print();
-
+  cout << "Allocated: " << *this->prevAdr - size << endl;
   return *this->prevAdr - size;
 } // alloc()
 
