@@ -115,7 +115,7 @@ bool MemSpace::check_for_adr(int adr)
 {
   for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
 
-  if (curr != head && curr != last)
+  if (curr != head && (curr != last || curr->address > adr))
   {
     curr = curr->prev;
     cout << "went back" << endl;
@@ -185,7 +185,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
 
   //memCheck.printCurrentAllocations(proc);
   //this->processes[proc].space->print();
-  cout << "Allocated: " << *this->prevAdr - size << endl;
+  //cout << "Allocated: " << *this->prevAdr - size << endl;
   return *this->prevAdr - size;
 } // alloc()
 
