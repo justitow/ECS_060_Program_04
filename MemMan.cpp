@@ -106,7 +106,7 @@ void MemSpace::print()
     cout << curr->address << ":" << curr->block_size <<  endl;
     curr = curr->next;
   }
-  cout << curr->address << endl;
+  cout << curr->address << ":" << curr->block_size <<  endl;
 
 }
 
@@ -212,7 +212,6 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
 
   while (this->memSpaces[proc].head != NULL)
   {
-    cout << "DeAlloc-ing: " << this->memSpaces[proc].head->address << endl;
     memCheck.deAlloc(proc, this->memSpaces[proc].head->address, opNum);
     this->memSpaces[proc].remove(this->memSpaces[proc].head->address);
   }
