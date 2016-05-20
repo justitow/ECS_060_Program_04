@@ -103,7 +103,7 @@ void MemSpace::print()
 
   while (curr->next != NULL)
   {
-    cout << curr->address << endl;
+    cout << curr->address << ":" << curr->block_size <<  endl;
     curr = curr->next;
   }
   cout << curr->address << endl;
