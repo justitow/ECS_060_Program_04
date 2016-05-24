@@ -166,13 +166,20 @@ void MemSpace::make_empty()
 
 MemBlock* MemSpace::findBlock(int size) // only for blankspace
 {
-  for (curr = head; curr->next != NULL && curr->max_size < size; curr = curr->next);
-
-  if (curr->next == NULL && curr->max_size < size)
+  if (head == NULL)
     return NULL;
 
   else
-    return curr;
+  {
+    for (curr = head;
+         curr->next != NULL && curr->max_size < size; curr = curr->next);
+
+    if (curr->next == NULL && curr->max_size < size)
+      return NULL;
+
+    else
+      return curr;
+  }
 }
 
 MemMan::MemMan(int ram, int proc, int op, MemCheck &memCheck)
