@@ -76,13 +76,17 @@ void MemSpace::remove(int adr)
       head = head->next;
     }
     else
+    {
       head = NULL;
+      last = NULL;
+    }
     delete curr;
   }
 
   else if (curr->next == NULL) // tail delete
   {
     curr->prev->next = NULL;
+    last = curr->prev;
     delete curr;
   }
 
