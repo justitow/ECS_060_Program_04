@@ -119,13 +119,13 @@ bool MemSpace::check_for_adr(int adr)
 
     if (curr != head)
     {
-      if (curr != last || (curr == last && adr < curr->address))
+      if (curr != last || (curr == last && adr <= curr->address))
       {
         curr = curr->prev;
       }
     }
 
-    if ((adr <= curr->address + curr->block_size) && (adr >= curr->address))
+    if ((adr <= curr->address + curr->block_size - 1) && (adr >= curr->address))
       return true;
   }
 
