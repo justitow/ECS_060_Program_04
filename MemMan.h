@@ -22,10 +22,11 @@ public:
   MemBlock* head;
   MemBlock* curr;
   MemBlock* last;
+  int proccess;
   int find_block(int adr);
   bool check_for_adr(int adr);
   void insert(int adr, int size);
-  void remove(int adr);
+  void remove(int adr, int prc);
   void make_empty();
   void print();
 };
