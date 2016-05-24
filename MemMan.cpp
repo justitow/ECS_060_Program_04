@@ -127,11 +127,11 @@ bool MemSpace::check_for_adr(int adr)
 
     if ((adr <= curr->address + curr->block_size - 1) && (adr >= curr->address))
     {
-      cout << curr->address << endl;
+      //cout << curr->address << endl;
       return true;
     }
 
-    cout << curr->address << endl;
+    //cout << curr->address << endl;
   }
 
   return false;
