@@ -53,6 +53,15 @@ int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if
   return address;
 }
 
+void MemSpace::print()
+{
+  if (head == NULL)
+    return;
+  for (curr = head; curr != NULL; curr = curr->next)
+    cout << curr->address << " : " << curr->max_size << endl;
+
+}
+
 void MemSpace::insert_alloc(MemBlock *block)
 {
   if (head == NULL)
@@ -100,6 +109,7 @@ void MemSpace::insert_alloc(MemBlock *block)
 
 void MemSpace::insert_dealloc(MemBlock* block)
 {
+  this->print();
 
   if (head == NULL)
   {

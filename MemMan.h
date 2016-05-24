@@ -30,6 +30,8 @@ public:
   void remove(int adr, MemSpace* blankspace);
   void make_empty();
 
+
+  void print();
   MemBlock* findBlock(int size);
 };
 
