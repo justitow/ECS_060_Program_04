@@ -126,9 +126,13 @@ bool MemSpace::check_for_adr(int adr)
     }
 
     if ((adr <= curr->address + curr->block_size - 1) && (adr >= curr->address))
+    {
+      cout << curr->address << endl;
       return true;
+    }
   }
 
+  cout << curr->address << endl;
   return false;
 }
 
@@ -161,6 +165,7 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
     cout << "Opnum: " << opNum << " access: proc: " << proc << " address: " << address << endl;
   
   memCheck.printCurrentAllocations(proc);
+
   //memCheck.printOwner(address, address);
 
   if (this->memSpaces[proc].check_for_adr(address)) // if the address is in the address table stored under the process. Maybe?
