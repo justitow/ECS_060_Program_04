@@ -259,7 +259,7 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
 {
   if (print != '0')
     cout << "Opnum: " << opNum << " daAlloc: proc: " << proc << " startAddress: " << startAddress << endl;
-    //memCheck.printCurrentAllocations(proc);
+    memCheck.printCurrentAllocations(proc);
     //memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress) - 1);
 
 
