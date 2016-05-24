@@ -125,7 +125,7 @@ bool MemSpace::check_for_adr(int adr)
       }
     }
 
-    if ((adr <= curr->address + curr->block_size - 1) && (adr >= curr->address))
+    if ((adr <= curr->address + curr->block_size) && (adr >= curr->address))
       return true;
   }
 
