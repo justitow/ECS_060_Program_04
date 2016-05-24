@@ -101,10 +101,10 @@ void MemSpace::insert(MemBlock* block)
 
     else // body insert
     {
-      curr->prev = block;
-      block->next = curr;
-      block->prev = curr->prev->next;
-      curr->prev->next = block;
+      curr->next->prev = block;
+      block->next = curr->next;
+      block->prev = curr->prev;
+      curr->next = block;
     }
   }
 }
