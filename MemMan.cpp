@@ -108,10 +108,8 @@ void MemSpace::print()
 
   while (curr->next != NULL)
   {
-    cout << curr->address << ":" << curr->block_size <<  endl;
     curr = curr->next;
   }
-  cout << curr->address << ":" << curr->block_size <<  endl;
 
 }
 
@@ -119,13 +117,7 @@ bool MemSpace::check_for_adr(int adr)
 {
   if (head != NULL)
   {
-    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next)
-    {
-      if (curr->next != NULL)
-        cout << "Is a next to " << curr->address <<  endl;
-      else
-        cout << "no next to " << curr->address << endl;
-    }
+    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
 
     cout << "Started at: " << curr->address << endl;
 
