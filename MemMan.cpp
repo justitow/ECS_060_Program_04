@@ -48,13 +48,66 @@ int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if
     address = adr;
   }
 
-  this->insert(myblock);
+  this->insert_alloc(myblock);
 
   return address;
 }
 
+void MemSpace::insert_alloc(MemBlock *block)
+{
+  if (head == NULL)
+  {
+    head = block;
+  }
+  else
+  {
+    for (curr = head; curr->next != NULL && curr->address < block->address; curr = curr->next);
 
-void MemSpace::insert(MemBlock* block)
+    if (curr == head) // head insert
+    {
+      if (curr->address < block->address)
+      {
+        if (curr->next != NULL)
+        {
+          curr->next->prev = block;
+          block->next = curr->next;
+        }
+        curr->next = block;
+        block->prev = curr;
+      }
+      else
+      {
+        curr->prev = block;
+        block->next = curr;
+        head = block;
+      }
+    }
+
+    else if (curr->next == NULL) // tail insert
+    {
+      if (curr->address < block->address) {
+        curr->next = block;
+        block->prev = curr;
+      }
+      else {
+        curr->prev->next = block;
+        block->prev = curr->prev;
+        block->next = curr;
+        curr->prev = block;
+      }
+    }
+
+    else // body insert
+    {
+      curr->next->prev = block;
+      block->next = curr->next;
+      block->prev = curr->prev;
+      curr->next = block;
+    }
+  }
+}
+
+void MemSpace::insert_dealloc(MemBlock* block)
 {
 
   if (head == NULL)
@@ -143,7 +196,7 @@ void MemSpace::remove(int adr, MemSpace* blankspace)
   }
 
   cout << "Starting blankspace insesrt" << endl;
-  blankspace->insert(curr);
+  blankspace->insert_dealloc(curr);
 }
 
 
@@ -166,10 +219,7 @@ bool MemSpace::check_for_adr(int adr)
   return false;
 }
 
-void MemSpace::make_empty()
-{
 
-}
 
 MemBlock* MemSpace::findBlock(int size) // only for blankspace
 {

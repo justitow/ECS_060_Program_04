@@ -24,7 +24,8 @@ public:
   MemBlock* curr;
   bool check_for_adr(int adr);
   int insert(int adr, int size, MemSpace* blankspace);
-  void insert(MemBlock* block);
+  void insert_alloc(MemBlock* block);
+  void insert_dealloc(MemBlock* block);
 
   void remove(int adr, MemSpace* blankspace);
   void make_empty();
