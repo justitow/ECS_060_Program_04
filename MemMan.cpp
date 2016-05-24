@@ -6,7 +6,7 @@
 
 using namespace std;
 
-MemBlock::MemBlock(int adr, int blk) : address(adr), block_size(blk)
+MemBlock::MemBlock(int adr, int blk, int mx) : address(adr), block_size(blk), max_size(mx)
 {
   next = NULL;
   prev = NULL;
@@ -30,34 +30,30 @@ MemSpace::~MemSpace()
 
 }
 
-int MemSpace::find_block(int adr)
-{
-  curr = head;
-  while (curr->address != adr)
-  {
-    curr = curr->next;
-  }
 
-  return curr->block_size;
-}
 
-void MemSpace::insert(int adr, int size)
+int MemSpace::insert(int adr, int size)
 {
 
-  MemBlock* myblock = new MemBlock(adr, size);
+  //if there is already a memory block
+
+
+  //else
+  MemBlock* myblock = new MemBlock(adr, size, size);
   if (this->head == NULL)
   {
     head = myblock;
     last = head;
   }
-  else // for niave approach, this will always be where the thing is getting inserted, I think
+  else // what happens if there aren't any approprately sized memory blocks.
   {
     last->next = myblock;
     myblock->prev = last;
     last = myblock;
   }
+  return 0;
 
-
+  return adr;
 }
 
 void MemSpace::remove(int adr)
@@ -189,15 +185,18 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   
    //memCheck.printOwner(address, endAddress);
   // allocates a block of the specified size, and returns its address.
+  int address = this->memSpaces[proc].insert(*this->prevAdr, size);
+  if (address)
+  {
+    *prevAdr += size; // just to do the niave approach, maybe, I think
+    return *this->prevAdr - size;
+  }
 
-  this->memSpaces[proc].insert(*this->prevAdr, size);
-
-  *prevAdr += size; // just to do the niave approach, maybe, I think
-
+  else
+    return address;
   //memCheck.printCurrentAllocations(proc);
   //this->processes[proc].space->print();
   //cout << "Allocated: " << *this->prevAdr - size << endl;
-  return *this->prevAdr - size;
 } // alloc()
 
 
