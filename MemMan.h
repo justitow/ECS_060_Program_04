@@ -26,7 +26,7 @@ public:
   int find_block(int adr);
   bool check_for_adr(int adr);
   void insert(int adr, int size);
-  void remove(int adr, int prc);
+  void remove(int adr);
   void make_empty();
   void print();
 };
