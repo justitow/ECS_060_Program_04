@@ -123,6 +123,11 @@ bool MemSpace::check_for_adr(int adr)
         cout << "no next to " << curr->address << endl;
     }
 
+    if (curr->next != NULL)
+      cout << "Is a next to " << curr->address <<  endl;
+    else
+      cout << "no next to " << curr->address << endl;
+
     cout << "Started at: " << curr->address << endl;
 
     if (curr != head && adr < curr->address)
