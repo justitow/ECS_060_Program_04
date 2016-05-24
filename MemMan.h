@@ -42,7 +42,7 @@ class MemMan
   int alloc(int proc, int opNum, int size, MemCheck &memCheck, char print);
   void deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck, char print );
 
-  int* prevAdr;
+  int* address_mark;
 
 }; // class MemMan
 

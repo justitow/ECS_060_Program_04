@@ -32,7 +32,7 @@ MemSpace::~MemSpace()
 
 
 
-int MemSpace::insert(int adr, int size)
+int MemSpace::insert(int adr, int size) // returns true if new memory is created
 {
 
   //if there is already a memory block
@@ -51,9 +51,8 @@ int MemSpace::insert(int adr, int size)
     myblock->prev = last;
     last = myblock;
   }
-  return -1;
-
   return adr;
+
 }
 
 void MemSpace::remove(int adr)
@@ -142,8 +141,8 @@ void MemSpace::make_empty()
 MemMan::MemMan(int ram, int proc, int op, MemCheck &memCheck)
 {
   memSpaces = new MemSpace[100];
-  prevAdr = new int;
-  *prevAdr = 0;
+  address_mark = new int;
+  *address_mark = 0;
 }// MemMan()
 
 
@@ -181,19 +180,17 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
 {
   if(print != '0')
     cout << "Opnum: " << opNum << " alloc: proc: " << proc << " address: " 
-      << *this->prevAdr << " size: " << size << endl;
+      << *address_mark << " size: " << size << endl;
   
    //memCheck.printOwner(address, endAddress);
   // allocates a block of the specified size, and returns its address.
-  int address = this->memSpaces[proc].insert(*this->prevAdr, size);
-  if (address != -1)
+  int new_adr = this->memSpaces[proc].insert(*address_mark, size);
+  if (new_adr == *address_mark)
   {
-    *prevAdr += size; // just to do the niave approach, maybe, I think
-    return *this->prevAdr - size;
+    *address_mark += size;
   }
 
-  else
-    return address;
+  return new_adr;
   //memCheck.printCurrentAllocations(proc);
   //this->processes[proc].space->print();
   //cout << "Allocated: " << *this->prevAdr - size << endl;
