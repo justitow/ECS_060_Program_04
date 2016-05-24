@@ -63,46 +63,37 @@ void MemSpace::insert_alloc(MemBlock *block)
   {
     for (curr = head; curr->next != NULL && curr->address < block->address; curr = curr->next);
 
-    if (curr == head) // head insert
+    if (curr == head && curr->address > block->address) // head insert
     {
-      if (curr->address < block->address)
-      {
-        if (curr->next != NULL)
-        {
-          curr->next->prev = block;
-          block->next = curr->next;
-        }
-        curr->next = block;
-        block->prev = curr;
-      }
-      else
-      {
-        curr->prev = block;
-        block->next = curr;
-        head = block;
-      }
+      curr->prev = block;
+      block->next = curr;
+      head = block;
     }
-
-    else if (curr->next == NULL) // tail insert
+    else if (curr->next == NULL && curr->address < block->address) // tail insert
     {
-      if (curr->address < block->address) {
         curr->next = block;
         block->prev = curr;
-      }
-      else {
-        curr->prev->next = block;
+    }
+    else // body insert
+    {
+      if (curr->address > block->address)
+      {
+        if (curr->prev)
+          curr->prev->next = block;
+
         block->prev = curr->prev;
         block->next = curr;
         curr->prev = block;
       }
-    }
+      else
+      {
+        if (curr->next)
+          curr->next->prev = block;
 
-    else // body insert
-    {
-      curr->next->prev = block;
-      block->next = curr->next;
-      block->prev = curr->prev;
-      curr->next = block;
+        block->next = curr->next;
+        block->prev = curr;
+        curr->next = block;
+      }
     }
   }
 }
@@ -118,46 +109,37 @@ void MemSpace::insert_dealloc(MemBlock* block)
   {
     for (curr = head; curr->next != NULL && curr->max_size < block->max_size; curr = curr->next);
 
-    if (curr == head) // head insert
+    if (curr == head && curr->max_size > block->max_size) // head insert
     {
-      if (curr->max_size < block->max_size)
-      {
-        if (curr->next != NULL)
-        {
-          curr->next->prev = block;
-          block->next = curr->next;
-        }
-        curr->next = block;
-        block->prev = curr;
-      }
-      else
-      {
-        curr->prev = block;
-        block->next = curr;
-        head = block;
-      }
+      curr->prev = block;
+      block->next = curr;
+      head = block;
     }
-
-    else if (curr->next == NULL) // tail insert
+    else if (curr->next == NULL && curr->max_size < block->max_size) // tail insert
     {
-      if (curr->max_size < block->max_size) {
-        curr->next = block;
-        block->prev = curr;
-      }
-      else {
-        curr->prev->next = block;
+      curr->next = block;
+      block->prev = curr;
+    }
+    else // body insert
+    {
+      if (curr->max_size > block->max_size)
+      {
+        if (curr->prev)
+          curr->prev->next = block;
+
         block->prev = curr->prev;
         block->next = curr;
         curr->prev = block;
       }
-    }
+      else
+      {
+        if (curr->next)
+          curr->next->prev = block;
 
-    else // body insert
-    {
-      curr->next->prev = block;
-      block->next = curr->next;
-      block->prev = curr->prev;
-      curr->next = block;
+        block->next = curr->next;
+        block->prev = curr;
+        curr->next = block;
+      }
     }
   }
 }
