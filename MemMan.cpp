@@ -51,7 +51,7 @@ int MemSpace::insert(int adr, int size)
     myblock->prev = last;
     last = myblock;
   }
-  return 0;
+  return -1;
 
   return adr;
 }
@@ -186,7 +186,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
    //memCheck.printOwner(address, endAddress);
   // allocates a block of the specified size, and returns its address.
   int address = this->memSpaces[proc].insert(*this->prevAdr, size);
-  if (address)
+  if (address != -1)
   {
     *prevAdr += size; // just to do the niave approach, maybe, I think
     return *this->prevAdr - size;
