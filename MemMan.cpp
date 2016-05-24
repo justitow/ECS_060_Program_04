@@ -57,6 +57,7 @@ int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if
 
 void MemSpace::insert(MemBlock* block)
 {
+
   if (head == NULL)
   {
     head = block;
@@ -68,6 +69,12 @@ void MemSpace::insert(MemBlock* block)
     if (curr == head) // head insert
     {
       if (curr->max_size < block->max_size) {
+
+        if (curr->next != NULL)
+        {
+          curr->next->prev = block;
+          block->next = curr->next;
+        }
         curr->next = block;
         block->prev = curr;
       }
@@ -85,10 +92,10 @@ void MemSpace::insert(MemBlock* block)
         block->prev = curr;
       }
       else {
-        curr->prev = block;
-        block->next = curr;
-        block->prev = curr->prev->next;
         curr->prev->next = block;
+        block->prev = curr->prev;
+        block->next = curr;
+        curr->prev = block;
       }
     }
 
@@ -171,8 +178,7 @@ MemBlock* MemSpace::findBlock(int size) // only for blankspace
 
   else
   {
-    for (curr = head;
-         curr->next != NULL && curr->max_size < size; curr = curr->next);
+    for (curr = head; curr->next != NULL && curr->max_size < size; curr = curr->next);
 
     if (curr->next == NULL && curr->max_size < size)
       return NULL;
