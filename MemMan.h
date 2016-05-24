@@ -24,16 +24,20 @@ public:
   MemBlock* curr;
   MemBlock* last;
   bool check_for_adr(int adr);
-  int insert(int adr, int size);
-  void remove(int adr);
+  int insert(int adr, int size, MemSpace* blankspace);
+  void insert(MemBlock* block);
+
+  void remove(int adr, MemSpace* blankspace);
   void make_empty();
-  void print();
+
+  MemBlock* findBlock(int size);
 };
 
 
 class MemMan
 {
   MemSpace* memSpaces;
+  MemSpace* blankSpace;
   public:
   MemMan(int ram, int proc, int op, MemCheck &memCheck);
   ~MemMan();

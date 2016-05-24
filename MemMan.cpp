@@ -32,30 +32,74 @@ MemSpace::~MemSpace()
 
 
 
-int MemSpace::insert(int adr, int size) // returns true if new memory is created
+int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if new memory is created
 {
-
+  int address;
   //if there is already a memory block
-
-
+  MemBlock* myblock = blankspace->findBlock(size);
+  if (myblock != NULL)
+  {
+    myblock->block_size = size;
+    address =  myblock->address;
+  }
   //else
-  MemBlock* myblock = new MemBlock(adr, size, size);
-  if (this->head == NULL)
+  else
   {
-    head = myblock;
-    last = head;
+    myblock = new MemBlock(adr, size, size);
+    address = adr;
   }
-  else // what happens if there aren't any approprately sized memory blocks.
-  {
-    last->next = myblock;
-    myblock->prev = last;
-    last = myblock;
-  }
-  return adr;
+  
+  this->insert(myblock);
 
+  return address;
 }
 
-void MemSpace::remove(int adr)
+
+void MemSpace::insert(MemBlock* block)
+{
+  for(curr = head; curr->next != NULL && curr->max_size < block->max_size; curr = curr->next);
+
+  if (curr == head) // head insert
+  {
+    if (curr->max_size < block->max_size)
+    {
+      curr->next = block;
+      block->prev = curr;
+    }
+    else
+    {
+      curr->prev = block;
+      block->next = curr;
+      head = block;
+    }
+  }
+
+  else if (curr->next == NULL) // tail insert
+  {
+    if (curr->max_size < block->max_size)
+    {
+      curr->next = block;
+      block->prev = curr;
+    }
+    else
+    {
+      curr->prev = block;
+      block->next = curr;
+      block->prev = curr->prev->next;
+      curr->prev->next = block;
+    }
+  }
+
+  else // body insert
+  {
+    curr->next->prev = block;
+    block->prev = curr->prev->next;
+    block->next = curr;
+    curr->prev = block;
+  }
+}
+
+void MemSpace::remove(int adr, MemSpace* blankspace)
 {
   curr = head;
   while(adr != curr->address)
@@ -75,38 +119,24 @@ void MemSpace::remove(int adr)
       head = NULL;
       last = NULL;
     }
-    delete curr;
   }
 
   else if (curr->next == NULL) // tail delete
   {
     curr->prev->next = NULL;
     last = curr->prev;
-    delete curr;
   }
 
   else // body delete
   {
     curr->prev->next = curr->next;
     curr->next->prev = curr->prev;
-    delete curr;
   }
 
+  blankspace->insert(curr);
 }
 
-void MemSpace::print()
-{
 
-  curr = head;
-  if (curr == NULL)
-    return;
-
-  while (curr->next != NULL)
-  {
-    curr = curr->next;
-  }
-
-}
 
 bool MemSpace::check_for_adr(int adr)
 {
@@ -118,15 +148,9 @@ bool MemSpace::check_for_adr(int adr)
     if (curr != head && adr < curr->address)
       curr = curr->prev;
 
-
-
     if ((adr <= curr->address + curr->block_size - 1) && (adr >= curr->address))
-    {
-      //cout << curr->address << endl;
       return true;
-    }
 
-    //cout << curr->address << endl;
   }
 
   return false;
@@ -137,10 +161,21 @@ void MemSpace::make_empty()
 
 }
 
+MemBlock* MemSpace::findBlock(int size) // only for blankspace
+{
+  for (curr = head; curr->next != NULL && curr->max_size < size; curr = curr->next);
+
+  if (curr->next == NULL && curr->max_size < size)
+    return NULL;
+
+  else
+    return curr;
+}
 
 MemMan::MemMan(int ram, int proc, int op, MemCheck &memCheck)
 {
   memSpaces = new MemSpace[100];
+  blankSpace = new MemSpace();
   address_mark = new int;
   *address_mark = 0;
 }// MemMan()
@@ -184,7 +219,7 @@ int MemMan::alloc(int proc, int opNum, int size, MemCheck &memCheck, char print)
   
    //memCheck.printOwner(address, endAddress);
   // allocates a block of the specified size, and returns its address.
-  int new_adr = this->memSpaces[proc].insert(*address_mark, size);
+  int new_adr = this->memSpaces[proc].insert(*address_mark, size, blankSpace);
   if (new_adr == *address_mark)
   {
     *address_mark += size;
@@ -206,7 +241,7 @@ void MemMan::deAlloc(int proc, int opNum, int startAddress, MemCheck &memCheck,
     //memCheck.printOwner(startAddress, startAddress + this->processes[proc].space->find_block(startAddress) - 1);
 
 
-  this->memSpaces[proc].remove(startAddress);
+  this->memSpaces[proc].remove(startAddress, blankSpace);
 
 } // deAlloc()
 
@@ -224,7 +259,7 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   while (this->memSpaces[proc].head != NULL)
   {
     memCheck.deAlloc(proc, this->memSpaces[proc].head->address, opNum);
-    this->memSpaces[proc].remove(this->memSpaces[proc].head->address);
+    this->memSpaces[proc].remove(this->memSpaces[proc].head->address, blankSpace);
   }
 
 
