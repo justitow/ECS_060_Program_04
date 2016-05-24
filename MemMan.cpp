@@ -67,8 +67,8 @@ void MemSpace::insert(MemBlock* block)
 
     if (curr == head) // head insert
     {
-      if (curr->max_size < block->max_size) {
-
+      if (curr->max_size < block->max_size)
+      {
         if (curr->next != NULL)
         {
           curr->next->prev = block;
@@ -77,7 +77,8 @@ void MemSpace::insert(MemBlock* block)
         curr->next = block;
         block->prev = curr;
       }
-      else {
+      else
+      {
         curr->prev = block;
         block->next = curr;
         head = block;
@@ -141,6 +142,7 @@ void MemSpace::remove(int adr, MemSpace* blankspace)
     curr->next->prev = curr->prev;
   }
 
+  cout << "Starting blankspace insesrt" << endl;
   blankspace->insert(curr);
 }
 
