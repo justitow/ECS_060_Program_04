@@ -115,7 +115,9 @@ bool MemSpace::check_for_adr(int adr)
 {
   if (head != NULL)
   {
-    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
+    for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next)
+      if (curr->next != NULL)
+        cout << "there is a next" << endl;
 
     cout << "Started at: " << curr->address << endl;
 
