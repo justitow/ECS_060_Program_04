@@ -114,6 +114,7 @@ void MemSpace::remove(int adr, MemSpace* blankspace)
   while(adr != curr->address)
   {
     curr = curr->next;
+    cout << curr->address << endl;
   }
 
   if (curr == head) // head delete
