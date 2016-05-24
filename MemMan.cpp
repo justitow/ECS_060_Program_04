@@ -22,7 +22,6 @@ MemSpace::MemSpace()
 {
   head = NULL;
   curr = head;
-  last = head;
 }
 
 MemSpace::~MemSpace()
