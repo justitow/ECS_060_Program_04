@@ -127,14 +127,12 @@ void MemSpace::remove(int adr, MemSpace* blankspace)
     else
     {
       head = NULL;
-      last = NULL;
     }
   }
 
   else if (curr->next == NULL) // tail delete
   {
     curr->prev->next = NULL;
-    last = curr->prev;
   }
 
   else // body delete
@@ -184,7 +182,15 @@ MemBlock* MemSpace::findBlock(int size) // only for blankspace
       return NULL;
 
     else
+    {
+      if (curr->prev != NULL)
+        curr->prev->next = curr->next;
+
+      if (curr->next != NULL)
+        curr->next->prev = curr->prev;
+
       return curr;
+    }
   }
 }
 

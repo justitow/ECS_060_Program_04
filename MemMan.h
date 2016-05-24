@@ -22,7 +22,6 @@ public:
   ~MemSpace();
   MemBlock* head;
   MemBlock* curr;
-  MemBlock* last;
   bool check_for_adr(int adr);
   int insert(int adr, int size, MemSpace* blankspace);
   void insert(MemBlock* block);
