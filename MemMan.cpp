@@ -57,45 +57,48 @@ int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if
 
 void MemSpace::insert(MemBlock* block)
 {
-  for(curr = head; curr->next != NULL && curr->max_size < block->max_size; curr = curr->next);
-
-  if (curr == head) // head insert
+  if (curr == NULL)
   {
-    if (curr->max_size < block->max_size)
-    {
-      curr->next = block;
-      block->prev = curr;
-    }
-    else
-    {
-      curr->prev = block;
-      block->next = curr;
-      head = block;
-    }
+    head = block;
   }
-
-  else if (curr->next == NULL) // tail insert
+  else
   {
-    if (curr->max_size < block->max_size)
+    for (curr = head; curr->next != NULL && curr->max_size < block->max_size; curr = curr->next);
+
+    if (curr == head) // head insert
     {
-      curr->next = block;
-      block->prev = curr;
+      if (curr->max_size < block->max_size) {
+        curr->next = block;
+        block->prev = curr;
+      }
+      else {
+        curr->prev = block;
+        block->next = curr;
+        head = block;
+      }
     }
-    else
+
+    else if (curr->next == NULL) // tail insert
+    {
+      if (curr->max_size < block->max_size) {
+        curr->next = block;
+        block->prev = curr;
+      }
+      else {
+        curr->prev = block;
+        block->next = curr;
+        block->prev = curr->prev->next;
+        curr->prev->next = block;
+      }
+    }
+
+    else // body insert
     {
       curr->prev = block;
       block->next = curr;
       block->prev = curr->prev->next;
       curr->prev->next = block;
     }
-  }
-
-  else // body insert
-  {
-    curr->prev = block;
-    block->next = curr;
-    block->prev = curr->prev->next;
-    curr->prev->next = block;
   }
 }
 
