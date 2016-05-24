@@ -116,7 +116,8 @@ bool MemSpace::check_for_adr(int adr)
   if (head != NULL)
   {
     for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
-    
+
+    cout << "Last: " << this->last << endl;
     cout << curr->address << endl;
 
     if (curr != head)
