@@ -119,7 +119,6 @@ bool MemSpace::check_for_adr(int adr)
   {
     for (curr = head; curr->next != NULL && curr->address < adr; curr = curr->next);
 
-    cout << "Started at: " << curr->address << endl;
 
     if (curr != head && adr < curr->address)
       curr = curr->prev;
