@@ -48,7 +48,7 @@ int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if
     myblock = new MemBlock(adr, size, size);
     address = adr;
   }
-  
+
   this->insert(myblock);
 
   return address;
@@ -92,10 +92,10 @@ void MemSpace::insert(MemBlock* block)
 
   else // body insert
   {
-    curr->next->prev = block;
-    block->prev = curr->prev->next;
-    block->next = curr;
     curr->prev = block;
+    block->next = curr;
+    block->prev = curr->prev->next;
+    curr->prev->next = block;
   }
 }
 
