@@ -40,6 +40,8 @@ int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if
   {
     myblock->block_size = size;
     address =  myblock->address;
+    myblock->next = NULL;
+    myblock->prev = NULL;
   }
   //else
   else
@@ -62,8 +64,11 @@ void MemSpace::print()
 
 }
 
-void MemSpace::insert_alloc(MemBlock *block)
+void MemSpace::insert_alloc(MemBlock *block) // sorted by address
 {
+  block->next = NULL;
+  block->prev = NULL;
+
   if (head == NULL)
   {
     head = block;
@@ -107,9 +112,12 @@ void MemSpace::insert_alloc(MemBlock *block)
   }
 }
 
-void MemSpace::insert_dealloc(MemBlock* block)
+void MemSpace::insert_dealloc(MemBlock* block) // sorted by max_size
 {
   this->print();
+
+  block->next = NULL;
+  block->prev = NULL;
 
   if (head == NULL)
   {
@@ -213,7 +221,7 @@ bool MemSpace::check_for_adr(int adr)
 
 
 
-MemBlock* MemSpace::findBlock(int size) // only for blankspace
+MemBlock* MemSpace::findBlock(int size) // only for blankspace, returns a block from the blankspace structure
 {
   if (head == NULL)
     return NULL;
@@ -226,7 +234,6 @@ MemBlock* MemSpace::findBlock(int size) // only for blankspace
       return NULL;
 
     else
-    {
       if (curr->prev != NULL)
         curr->prev->next = curr->next;
 
