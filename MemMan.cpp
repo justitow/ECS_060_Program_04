@@ -57,7 +57,7 @@ int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if
 
 void MemSpace::insert(MemBlock* block)
 {
-  if (curr == NULL)
+  if (head == NULL)
   {
     head = block;
   }
