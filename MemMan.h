@@ -24,7 +24,7 @@ public:
   MemBlock* curr;
   MemBlock* last;
   bool check_for_adr(int adr);
-  bool insert(int adr, int size);
+  int insert(int adr, int size);
   void remove(int adr);
   void make_empty();
   void print();
