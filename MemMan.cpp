@@ -165,7 +165,7 @@ bool MemMan::access(int proc, int address, int opNum, MemCheck &memCheck,
   if(print != '0')
     cout << "Opnum: " << opNum << " access: proc: " << proc << " address: " << address << endl;
   
-  memCheck.printCurrentAllocations(proc);
+  //memCheck.printCurrentAllocations(proc);
 
   //memCheck.printOwner(address, address);
 
@@ -222,7 +222,7 @@ void MemMan::endProc(int proc, int opNum, MemCheck &memCheck, char print)
   
   //memCheck.printCurrentAllocations(proc);
   // free all memory assigned to proc.
-  this->memSpaces[proc].print();
+  //this->memSpaces[proc].print();
 
 
   while (this->memSpaces[proc].head != NULL)
