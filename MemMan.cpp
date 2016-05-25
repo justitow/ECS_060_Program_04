@@ -238,8 +238,13 @@ MemBlock* MemSpace::findBlock(int size) // only for blankspace, returns a block 
       if (curr->prev != NULL)
         curr->prev->next = curr->next;
 
+
       if (curr->next != NULL)
         curr->next->prev = curr->prev;
+
+      if (curr == head)
+        head = curr->next;
+
 
       return curr;
     }
