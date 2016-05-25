@@ -167,7 +167,6 @@ void MemSpace::remove(int adr, MemSpace* blankspace)
   while(adr != curr->address)
   {
     curr = curr->next;
-    cout << curr->address << endl;
   }
 
   if (curr == head) // head delete
@@ -194,7 +193,6 @@ void MemSpace::remove(int adr, MemSpace* blankspace)
     curr->next->prev = curr->prev;
   }
 
-  cout << "Starting blankspace insesrt" << endl;
   blankspace->insert_dealloc(curr);
 }
 
