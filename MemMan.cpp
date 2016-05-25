@@ -114,7 +114,6 @@ void MemSpace::insert_alloc(MemBlock *block) // sorted by address
 
 void MemSpace::insert_dealloc(MemBlock* block) // sorted by max_size
 {
-  this->print();
 
   block->next = NULL;
   block->prev = NULL;
