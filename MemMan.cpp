@@ -50,7 +50,7 @@ int MemSpace::insert(int adr, int size, MemSpace* blankspace) // returns true if
     address = adr;
   }
 
-  this->insert_alloc(myblock);
+  this->insert(myblock);
 
   return address;
 }
@@ -64,7 +64,7 @@ void MemSpace::print()
 
 }
 
-void MemSpace::insert_alloc(MemBlock *block) // sorted by address
+void MemSpace::insert(MemBlock *block) // sorted by address
 {
   block->next = NULL;
   block->prev = NULL;
@@ -112,6 +112,7 @@ void MemSpace::insert_alloc(MemBlock *block) // sorted by address
   }
 }
 
+/*
 void MemSpace::insert_dealloc(MemBlock* block) // sorted by max_size
 {
 
@@ -160,6 +161,7 @@ void MemSpace::insert_dealloc(MemBlock* block) // sorted by max_size
     }
   }
 }
+ */
 
 void MemSpace::remove(int adr, MemSpace* blankspace)
 {
@@ -193,7 +195,7 @@ void MemSpace::remove(int adr, MemSpace* blankspace)
     curr->next->prev = curr->prev;
   }
 
-  blankspace->insert_dealloc(curr);
+  blankspace->insert(curr);
 }
 
 
