@@ -234,6 +234,7 @@ MemBlock* MemSpace::findBlock(int size) // only for blankspace, returns a block 
       return NULL;
 
     else
+    {
       if (curr->prev != NULL)
         curr->prev->next = curr->next;
 
